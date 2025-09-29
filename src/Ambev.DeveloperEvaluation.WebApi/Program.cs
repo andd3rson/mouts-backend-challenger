@@ -25,7 +25,7 @@ public class Program
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-
+            builder.AddDefaultLogging();
             builder.AddBasicHealthChecks();
             builder.Services.AddSwaggerGen();
 
@@ -53,8 +53,15 @@ public class Program
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
             var app = builder.Build();
+            // aplica migrations ao iniciar
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<DefaultContext>();
+                db.Database.Migrate();
+            }
             app.UseMiddleware<ValidationExceptionMiddleware>();
-
+   
+            app.UseDefaultLogging();
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
