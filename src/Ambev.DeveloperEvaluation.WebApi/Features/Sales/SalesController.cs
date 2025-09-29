@@ -2,6 +2,7 @@
 using Ambev.DeveloperEvaluation.Application.Sales.DeleteSale;
 using Ambev.DeveloperEvaluation.Application.Sales.GetSale;
 using Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
+using Ambev.DeveloperEvaluation.Common.Logging;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSales;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.DeleteSales;
@@ -49,6 +50,7 @@ public class SalesController : BaseController
 
         var command = _mapper.Map<GetSalesCommand>(request);
         var response = await _mediator.Send(command, cancellationToken);
+      
         return Ok(new PaginatedList<GetSalesResponse>(
 
             _mapper.Map<List<GetSalesResponse>>(response.Item1),

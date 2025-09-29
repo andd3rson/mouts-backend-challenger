@@ -25,7 +25,7 @@ public class Program
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-
+            builder.AddDefaultLogging();
             builder.AddBasicHealthChecks();
             builder.Services.AddSwaggerGen();
 
@@ -60,7 +60,8 @@ public class Program
                 db.Database.Migrate();
             }
             app.UseMiddleware<ValidationExceptionMiddleware>();
-
+   
+            app.UseDefaultLogging();
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();

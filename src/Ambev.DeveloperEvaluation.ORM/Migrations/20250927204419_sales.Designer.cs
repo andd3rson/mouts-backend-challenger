@@ -3,6 +3,7 @@ using System;
 using Ambev.DeveloperEvaluation.ORM;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ambev.DeveloperEvaluation.ORM.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    partial class DefaultContextModelSnapshot : ModelSnapshot
+    [Migration("20250927204419_sales")]
+    partial class sales
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,8 +24,6 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.HasSequence<int>("SaleNumber");
 
             modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.Sale", b =>
                 {
@@ -39,7 +40,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     b.Property<bool>("Cancelled")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CustomerId")
@@ -48,16 +49,12 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                         .HasColumnType("character varying(100)");
 
                     b.Property<int>("SaleNumber")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("SaleNumber"));
+                    NpgsqlPropertyBuilderExtensions.HasIdentityOptions(b.Property<int>("SaleNumber"), 1L, null, null, null, null, null);
 
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("numeric");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -72,9 +69,6 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasDefaultValueSql("gen_random_uuid()");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<decimal>("DiscountPercent")
                         .HasColumnType("numeric");
@@ -95,9 +89,6 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
 
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("numeric");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
