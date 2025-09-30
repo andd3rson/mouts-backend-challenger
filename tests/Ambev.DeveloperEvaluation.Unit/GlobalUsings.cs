@@ -1,0 +1,10 @@
+﻿global using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
+global using Ambev.DeveloperEvaluation.Domain.Entities;
+global using Ambev.DeveloperEvaluation.Domain.Repositories;
+global using Ambev.DeveloperEvaluation.Unit.Application.TestData;
+global using AutoMapper;
+global using FluentAssertions;
+global using Microsoft.Extensions.Logging;
+global using NSubstitute;
+global using System.ComponentModel.DataAnnotations;
+global using Xunit;
