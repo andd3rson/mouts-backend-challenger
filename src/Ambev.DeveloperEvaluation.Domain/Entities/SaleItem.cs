@@ -4,7 +4,15 @@ using Ambev.DeveloperEvaluation.Domain.Common;
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
 public class SaleItem : BaseEntity
-{  
+{
+    public SaleItem(Guid id, string productId, int quantity, decimal unitPrice)
+    {
+        Id = id;
+        ProductId = productId;
+        Quantity = quantity;
+        UnitPrice = unitPrice;
+        ApplyBusinessRulesAndCalculate(quantity);
+    }
     public SaleItem(string productId, int quantity, decimal unitPrice)
     {
         

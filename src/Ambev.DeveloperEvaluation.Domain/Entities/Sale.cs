@@ -47,6 +47,10 @@ public class Sale : BaseEntity
     /// </summary>
     public bool Cancelled { get; set; } = false;
 
+    public void CancelSale(bool cancelled)
+    {
+        Cancelled = cancelled;
+    }
     public void UpdateSale(string brancId, string customerId, bool cancelled, List<SaleItem> items)
     {
         BranchId = brancId;
