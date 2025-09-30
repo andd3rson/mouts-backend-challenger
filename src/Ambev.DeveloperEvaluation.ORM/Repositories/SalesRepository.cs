@@ -13,23 +13,24 @@ public class SalesRepository : RepositoryBase<Sale>, ISaleRepository
     }
 
     public async Task<Sale> GetByIdAsync(Guid id, CancellationToken cancelation)
-        => await _context.Sales.AsNoTracking()
+        => await _context.Sales
+        .AsNoTracking()
         .Include(x => x.Items)
-        .SingleOrDefaultAsync(x => x.Id == id);
+        .FirstOrDefaultAsync(x => x.Id == id, cancelation);
 
     public async Task<List<Sale>> GetFilteredAndPagedItems(int pageIndex, int pageSize, string? search, CancellationToken cancellationToken)
     {
         return await _context.Sales
                     .AsNoTracking()
-                    .Include(x=>x.Items)
-                    .Where(x=> 
+                    .Include(x => x.Items)
+                    .Where(x =>
                         EF.Functions.Like(x.CustomerId, $"%{search}%")
                         )
                     .Skip((pageIndex - 1) * pageSize)
-                    .Take(pageSize)                   
+                    .Take(pageSize)
                     .ToListAsync(cancellationToken);
 
-       
+
     }
 
     public async Task<int> GetTotalCountAsync(CancellationToken cancellationToken = default)
@@ -62,7 +63,7 @@ public class SalesRepository : RepositoryBase<Sale>, ISaleRepository
             var existing = tracked.Items.FirstOrDefault(i => i.Id == incoming.Id);
             if (existing != null)
             {
-                existing.Update(incoming.ProductId, incoming.Quantity, incoming.UnitPrice);
+                existing.Update(incoming.Id, incoming.ProductId, incoming.Quantity, incoming.UnitPrice);
             }
             else
             {

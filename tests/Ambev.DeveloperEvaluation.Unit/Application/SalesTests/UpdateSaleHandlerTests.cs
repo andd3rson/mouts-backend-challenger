@@ -1,14 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
-using Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
-using Ambev.DeveloperEvaluation.Domain.Entities;
-using Ambev.DeveloperEvaluation.Domain.Repositories;
-using Ambev.DeveloperEvaluation.Unit.Application.TestData;
-using AutoMapper;
-using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using NSubstitute;
-using System.ComponentModel.DataAnnotations;
-using Xunit;
+﻿using Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.SalesTests;
 
@@ -16,7 +6,7 @@ public class UpdateSaleHandlerTests
 {
     private readonly ISaleRepository _repo = Substitute.For<ISaleRepository>();
     private readonly IMapper _mapper = Substitute.For<IMapper>();
-    private readonly ILogger<CreateSaleHandler> _logger = Substitute.For<ILogger<CreateSaleHandler>>();
+    private readonly ILogger<UpdateSaleHandler> _logger = Substitute.For<ILogger<UpdateSaleHandler>>();
     private readonly UpdateSaleHandler _handler;
 
     public UpdateSaleHandlerTests()

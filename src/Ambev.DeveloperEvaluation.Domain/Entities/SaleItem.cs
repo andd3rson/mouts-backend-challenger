@@ -32,6 +32,15 @@ public class SaleItem : BaseEntity
     public Guid SaleId { get; set; }
     public Sale Sale { get; set; }
 
+    public void Update(Guid id, string productId, int quantity, decimal unitPrice)
+    {
+        Id = id;
+        ProductId = productId;
+        Quantity = quantity;
+        UnitPrice = unitPrice;
+
+        ApplyBusinessRulesAndCalculate(quantity);
+    }
     public void Update(string productId, int quantity, decimal unitPrice)
     {
         ProductId = productId;
